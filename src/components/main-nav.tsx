@@ -1,0 +1,51 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import {
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
+import {
+  LayoutGrid,
+  Search,
+  FileText,
+  DollarSign,
+  MessageSquare,
+  Building2,
+  PlusCircle,
+} from "lucide-react";
+import Link from "next/link";
+
+const navItems = [
+  { href: "/dashboard", icon: <LayoutGrid />, label: "Dashboard" },
+  { href: "/jobs", icon: <Search />, label: "Job Search" },
+  { href: "/resume-doctor", icon: <FileText />, label: "Resume Doctor" },
+  { href: "/salary-coach", icon: <DollarSign />, label: "Salary Coach" },
+  { href: "/interview-prep", icon: <MessageSquare />, label: "Interview Prep" },
+  { href: "/companies", icon: <Building2 />, label: "Companies" },
+  { href: "/post-a-job", icon: <PlusCircle />, label: "Post a Job" },
+];
+
+export function MainNav() {
+  const pathname = usePathname();
+
+  return (
+    <SidebarMenu>
+      {navItems.map((item) => (
+        <SidebarMenuItem key={item.href}>
+          <SidebarMenuButton
+            asChild
+            isActive={pathname === item.href}
+            tooltip={item.label}
+          >
+            <Link href={item.href}>
+              {item.icon}
+              <span>{item.label}</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  );
+}
