@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "studio-8612578263-b0651-9c383",
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
