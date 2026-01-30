@@ -12,6 +12,7 @@ export const jobs = [
     logo: "https://picsum.photos/seed/logo1/100/100",
     tags: ["React", "TypeScript", "Remote"],
     status: "applied",
+    source: "Direct",
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ export const jobs = [
     logo: "https://picsum.photos/seed/logo2/100/100",
     tags: ["Agile", "SaaS", "Product"],
     status: "interviewing",
+    source: "Direct",
   },
   {
     id: 3,
@@ -36,6 +38,7 @@ export const jobs = [
     logo: "https://picsum.photos/seed/logo3/100/100",
     tags: ["Figma", "User Research", "Mobile"],
     status: "offer",
+    source: "Direct",
   },
   {
     id: 4,
@@ -48,6 +51,7 @@ export const jobs = [
     logo: "https://picsum.photos/seed/logo4/100/100",
     tags: ["Python", "Django", "AWS"],
     status: "applied",
+    source: "Direct",
   },
   {
     id: 5,
@@ -60,6 +64,7 @@ export const jobs = [
     logo: "https://picsum.photos/seed/logo1/100/100",
     tags: ["Kubernetes", "Docker", "CI/CD"],
     status: "interviewing",
+    source: "Direct",
   },
   {
     id: 6,
@@ -72,7 +77,47 @@ export const jobs = [
     logo: "https://picsum.photos/seed/logo2/100/100",
     tags: ["Machine Learning", "Python", "NLP"],
     status: "rejected",
+    source: "Direct",
   },
+];
+
+export const externalJobs = [
+    {
+        id: 101,
+        title: "Lead Software Engineer",
+        company: "MegaCorp India",
+        location: "Bengaluru, India",
+        type: "Full-time",
+        salary: "₹30L - ₹45L",
+        posted: "1 day ago",
+        logo: "https://picsum.photos/seed/extlogo1/100/100",
+        tags: ["Java", "Spring Boot", "Microservices"],
+        source: "Naukri.com",
+    },
+    {
+        id: 102,
+        title: "Senior Data Analyst",
+        company: "Global Analytics",
+        location: "Pune, India",
+        type: "Full-time",
+        salary: "₹18L - ₹25L",
+        posted: "3 days ago",
+        logo: "https://picsum.photos/seed/extlogo2/100/100",
+        tags: ["SQL", "Tableau", "Python"],
+        source: "Naukri.com",
+    },
+    {
+        id: 103,
+        title: "Cloud Architect",
+        company: "InfraCloud",
+        location: "Hyderabad, India (Remote)",
+        type: "Full-time",
+        salary: "₹40L - ₹60L",
+        posted: "4 days ago",
+        logo: "https://picsum.photos/seed/extlogo3/100/100",
+        tags: ["AWS", "Azure", "Terraform"],
+        source: "Naukri.com",
+    },
 ];
 
 export const companies = [
