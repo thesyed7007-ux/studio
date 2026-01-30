@@ -1,41 +1,311 @@
 {
   "entities": {
-    "UserProfile": {
-      "title": "User Profile",
-      "description": "Represents a user's profile in the system.",
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
       "type": "object",
+      "description": "Represents a user of the CareerCopilot platform.",
       "properties": {
-        "uid": {
+        "id": {
           "type": "string",
-          "description": "The user's unique ID from Firebase Auth."
+          "description": "Unique identifier for the User entity."
         },
         "email": {
           "type": "string",
-          "format": "email",
-          "description": "The user's email address."
+          "description": "User's email address.",
+          "format": "email"
         },
-        "displayName": {
+        "firstName": {
           "type": "string",
-          "description": "The user's display name."
+          "description": "User's first name."
         },
-        "photoURL": {
+        "lastName": {
           "type": "string",
-          "format": "uri",
-          "description": "URL of the user's profile picture."
+          "description": "User's last name."
+        },
+        "role": {
+          "type": "string",
+          "description": "User's role (e.g., job seeker, recruiter)."
+        },
+        "linkedInProfileUrl": {
+          "type": "string",
+          "description": "URL to the user's LinkedIn profile.",
+          "format": "uri"
+        },
+        "resumeUrl": {
+          "type": "string",
+          "description": "URL to the user's resume.",
+          "format": "uri"
         }
       },
-      "required": ["uid", "email"]
+      "required": [
+        "id",
+        "email",
+        "firstName",
+        "lastName",
+        "role"
+      ]
+    },
+    "JobPosting": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "JobPosting",
+      "type": "object",
+      "description": "Represents a job posting on the CareerCopilot platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the JobPosting entity."
+        },
+        "recruiterId": {
+          "type": "string",
+          "description": "Reference to User (Recruiter). (Relationship: User 1:N JobPosting)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Job title."
+        },
+        "description": {
+          "type": "string",
+          "description": "Job description."
+        },
+        "company": {
+          "type": "string",
+          "description": "Company posting the job."
+        },
+        "location": {
+          "type": "string",
+          "description": "Job location."
+        },
+        "salaryRange": {
+          "type": "string",
+          "description": "Salary range for the job."
+        },
+        "remote": {
+          "type": "boolean",
+          "description": "Indicates if the job is remote."
+        },
+        "postedDate": {
+          "type": "string",
+          "description": "Date the job was posted.",
+          "format": "date-time"
+        },
+        "applicationIds": {
+          "type": "array",
+          "description": "References to Applications. (Relationship: JobPosting 1:N Application)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "recruiterId",
+        "title",
+        "description",
+        "company",
+        "location",
+        "salaryRange",
+        "remote",
+        "postedDate"
+      ]
+    },
+    "Application": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Application",
+      "type": "object",
+      "description": "Represents a user's application to a job posting.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Application entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Application)"
+        },
+        "jobPostingId": {
+          "type": "string",
+          "description": "Reference to JobPosting. (Relationship: JobPosting 1:N Application)"
+        },
+        "applicationDate": {
+          "type": "string",
+          "description": "Date the application was submitted.",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the application (e.g., Applied, Interviewing, Offer, Rejected)."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Notes about the application."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "jobPostingId",
+        "applicationDate",
+        "status"
+      ]
+    },
+    "Company": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Company",
+      "type": "object",
+      "description": "Represents a company.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Company entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the company."
+        },
+        "cultureFitScore": {
+          "type": "number",
+          "description": "Company culture fit score."
+        },
+        "employeeHappinessData": {
+          "type": "number",
+          "description": "Employee happiness data."
+        },
+        "growthTrajectory": {
+          "type": "string",
+          "description": "Company growth trajectory."
+        },
+        "interviewDifficultyRating": {
+          "type": "number",
+          "description": "Interview difficulty rating."
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "Skill": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Skill",
+      "type": "object",
+      "description": "Represents a skill.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Skill entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the skill."
+        },
+        "jobPostingIds": {
+          "type": "array",
+          "description": "References to JobPostings. (Relationship: Skill N:N JobPosting)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
     }
   },
   "auth": {
-    "providers": ["google.com"]
+    "providers": [
+      "password",
+      "anonymous"
+    ]
   },
   "firestore": {
-    "/users/{userId}": {
-      "schema": {
-        "$ref": "#/backend/entities/UserProfile"
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles. Uses path-based ownership for private user data.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
       },
-      "description": "Stores public information about a user."
-    }
+      {
+        "path": "/job_postings/{jobPostingId}",
+        "definition": {
+          "entityName": "JobPosting",
+          "schema": {
+            "$ref": "#/backend/entities/JobPosting"
+          },
+          "description": "Stores job postings. Includes denormalized 'recruiterId' for authorization independence.",
+          "params": [
+            {
+              "name": "jobPostingId",
+              "description": "The unique identifier for the job posting."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/applications/{applicationId}",
+        "definition": {
+          "entityName": "Application",
+          "schema": {
+            "$ref": "#/backend/entities/Application"
+          },
+          "description": "Stores job applications for each user. Uses path-based ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            },
+            {
+              "name": "applicationId",
+              "description": "The unique identifier for the application."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/companies/{companyId}",
+        "definition": {
+          "entityName": "Company",
+          "schema": {
+            "$ref": "#/backend/entities/Company"
+          },
+          "description": "Stores company information.",
+          "params": [
+            {
+              "name": "companyId",
+              "description": "The unique identifier for the company."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/skills/{skillId}",
+        "definition": {
+          "entityName": "Skill",
+          "schema": {
+            "$ref": "#/backend/entities/Skill"
+          },
+          "description": "Stores skill information.",
+          "params": [
+            {
+              "name": "skillId",
+              "description": "The unique identifier for the skill."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support CareerCopilot's core features, focusing on job postings, applications, user data, and company information. Authorization Independence is achieved through path-based ownership for user-related data and denormalization of recruiter information into job postings. Specifically, the `JobPosting` documents include the `recruiterId` allowing rules to enforce that only the recruiter who created the job posting can modify it, thus eliminating the need for `get()` calls to the `/users` collection to determine ownership. Additionally, roles are stored directly in the user document itself in the `/users` collection, eliminating the need for custom claims or separate role collections.\n\nThe structure also addresses QAPs (Rules are not Filters). Segregation is used to ensure that each collection has a homogenous security posture. User-owned data (like applications) is stored under the `/users/{userId}` path, while recruiter-owned data (job postings) is stored under `/job_postings` with the recruiter's ID denormalized within each document. This segregation prevents the need for complex filtering within rules. List operations are secured by ensuring that rules can efficiently verify user roles or ownership without querying other parts of the database.\n\nThe use of explicit state modeling through the `status` field in the `Application` entity and predictable schema with consistent naming conventions further enhances debuggability and maintainability. Timestamps are also present to track posted dates and application dates."
   }
 }

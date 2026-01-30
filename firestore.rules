@@ -1,0 +1,178 @@
+/**
+ * This ruleset enforces a security model for the CareerCopilot application,
+ * prioritizing user privacy and clear data ownership.
+ *
+ * Core Philosophy:
+ * The rules establish a strict user-ownership model for sensitive data while
+ * allowing public read access for shared data like job postings. The primary
+ * goal is to ensure users can only access and manage their own information,
+ * and recruiters can only manage the job postings they create.
+ *
+ * Data Structure:
+ * - /users/{userId}: Private user profile data.
+ * - /users/{userId}/applications/{applicationId}: A user's private job applications.
+ * - /job_postings/{jobPostingId}: Job listings, publicly readable.
+ * - /companies/{companyId}: Public company information.
+ * - /skills/{skillId}: Public skills information.
+ *
+ * Key Security Decisions:
+ * - User Enumeration Disabled: Listing documents in the top-level `/users`
+ *   collection is explicitly disallowed to protect user privacy.
+ * - Private User Data: All data under a user's path (e.g., `/users/{userId}/...`)
+ *   is strictly accessible only to that authenticated user.
+ * - Denormalized Ownership: Job postings contain a `recruiterId` field. This
+ *   avoids costly and slow database lookups during authorization checks, ensuring
+ *   that write access is determined directly from the document being accessed.
+ * - Segregated Collections: User-specific data (applications) is nested in a
+ *   private subcollection, while public data (job postings) is in a separate
+ *   top-level collection. This simplifies list queries and security.
+ * - Read-Only Global Data: Collections like `/companies` and `/skills` are treated
+ *   as public, read-only reference data. All client-side writes are disabled,
+ *   assuming this data is managed through a trusted server-side process.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ----------------------------------------------------------------------
+    // Helper Functions
+    // ----------------------------------------------------------------------
+
+    /**
+     * Returns true if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Returns true if the requesting user's UID matches the provided userId.
+     * This is the core function for enforcing data ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Returns true if the document exists and the requesting user is the owner.
+     * Used for safe update and delete operations.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+
+    // ----------------------------------------------------------------------
+    // User Profiles (/users)
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description Manages user profile documents. A user can create their own
+     *              profile, and can only read or write to their own document after
+     *              it has been created. Listing users is forbidden.
+     * @path        /users/{userId}
+     * @allow       (create) An authenticated user with UID 'user_abc' creates their own
+     *              profile at `/users/user_abc` with `{ "id": "user_abc" }`.
+     * @deny        (get) A user 'user_xyz' tries to read `/users/user_abc`.
+     * @principle   Restricts access to a user's own data tree and enforces
+     *              relational integrity upon creation.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isOwner(userId) && resource != null && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+
+      // ----------------------------------------------------------------------
+      // User Applications (/users/{userId}/applications)
+      // ----------------------------------------------------------------------
+
+      /**
+       * @description Manages a user's job applications. Applications are stored in a
+       *              subcollection, ensuring they can only be accessed by the owner.
+       * @path        /users/{userId}/applications/{applicationId}
+       * @allow       (create) A user 'user_abc' creates a new application document in
+       *              their own subcollection: `/users/user_abc/applications/app_123`.
+       * @deny        (list) A user 'user_xyz' tries to list applications at
+       *              `/users/user_abc/applications`.
+       * @principle   Enforces strict data ownership for nested private data.
+       */
+      match /applications/{applicationId} {
+        allow get: if isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isOwner(userId) && request.resource.data.userId == userId;
+        allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+        allow delete: if isExistingOwner(userId);
+      }
+    }
+
+    // ----------------------------------------------------------------------
+    // Job Postings (/job_postings)
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description Manages job postings. Anyone can read job postings, but only the
+     *              recruiter who created it can modify or delete it.
+     * @path        /job_postings/{jobPostingId}
+     * @allow       (get) Any user, signed in or not, can read a job posting.
+     * @allow       (create) A signed-in user 'recruiter_xyz' creates a posting with
+     *              `{ "recruiterId": "recruiter_xyz", ... }`.
+     * @deny        (update) A user 'user_abc' tries to update a posting where the
+     *              existing `recruiterId` is 'recruiter_xyz'.
+     * @principle   Implements a "Public Read, Owner-Only Write" model using a
+     *              denormalized `recruiterId` field for authorization.
+     */
+    match /job_postings/{jobPostingId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if isSignedIn() && request.resource.data.recruiterId == request.auth.uid;
+      allow update: if isExistingOwner(resource.data.recruiterId) && request.resource.data.recruiterId == resource.data.recruiterId;
+      allow delete: if isExistingOwner(resource.data.recruiterId);
+    }
+
+    // ----------------------------------------------------------------------
+    // Companies (/companies)
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description Stores public information about companies. This data is intended
+     *              to be read-only for all clients.
+     * @path        /companies/{companyId}
+     * @allow       (get) Any user, signed in or not, can read a company's profile.
+     * @deny        (create) Any client attempts to create, update, or delete a
+     *              company document.
+     * @principle   Provides public read access for global reference data while
+     *              prohibiting all client-side writes.
+     */
+    match /companies/{companyId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    // ----------------------------------------------------------------------
+    // Skills (/skills)
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description Stores public information about skills. This data is intended
+     *              to be read-only for all clients.
+     * @path        /skills/{skillId}
+     * @allow       (list) Any user, signed in or not, can list all skills.
+     * @deny        (update) Any client attempts to create, update, or delete a
+     *              skill document.
+     * @principle   Provides public read access for global reference data while
+     *              prohibiting all client-side writes.
+     */
+    match /skills/{skillId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
