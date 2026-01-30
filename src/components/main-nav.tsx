@@ -15,6 +15,7 @@ import {
   Building2,
   PlusCircle,
   ClipboardSignature,
+  Mail,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -27,6 +28,7 @@ const navItems = [
   { href: "/interview-prep", icon: <MessageSquare />, label: "Interview Prep" },
   { href: "/companies", icon: <Building2 />, label: "Companies" },
   { href: "/post-a-job", icon: <PlusCircle />, label: "Post a Job" },
+  { href: "/email-assistant", icon: <Mail />, label: "Email Assistant" },
 ];
 
 export function MainNav() {
