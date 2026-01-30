@@ -52,7 +52,7 @@ export default function LoginPage() {
                     <div className="mx-auto mb-4">
                         <Logo />
                     </div>
-                    <CardTitle className="text-2xl font-headline">Welcome Back</CardTitle>
+                    <CardTitle className="text-2xl font-headline">Welcome to CareerCopilot</CardTitle>
                     <CardDescription>Sign in to access your personalized career dashboard.</CardDescription>
                 </CardHeader>
                 <CardContent>

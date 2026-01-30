@@ -39,10 +39,10 @@ const features = [
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <Logo />
-        <Button asChild variant="ghost">
+        <Button asChild>
           <Link href="/dashboard">
             Go to App <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
@@ -50,9 +50,11 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-grow">
-        <section className="py-20 md:py-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-6xl font-headline font-bold tracking-tighter mb-4">
+        <section className="relative py-20 md:py-32">
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 to-transparent"></div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 className="text-4xl md:text-6xl font-headline font-bold tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-foreground to-foreground/70">
               Your Career Ascends Here.
             </h1>
             <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-8">
@@ -74,7 +76,7 @@ export default function LandingPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature, index) => (
-                <Card key={index} className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-shadow duration-300">
+                <Card key={index} className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-shadow duration-300 hover:border-primary/30">
                   <CardHeader className="flex flex-row items-center gap-4">
                     {feature.icon}
                     <CardTitle className="font-headline text-xl">{feature.title}</CardTitle>

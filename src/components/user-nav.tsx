@@ -15,6 +15,7 @@ import { useUser } from "@/firebase";
 import { CreditCard, LogOut, Settings, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 import { getAuth, signOut } from "firebase/auth";
+import { Skeleton } from "./ui/skeleton";
 
 export function UserNav() {
   const { user, loading } = useUser();
@@ -25,7 +26,7 @@ export function UserNav() {
   };
 
   if (loading) {
-    return <div className="h-9 w-9 rounded-full bg-muted animate-pulse" />;
+    return <Skeleton className="h-9 w-9 rounded-full" />;
   }
 
   if (!user) {
