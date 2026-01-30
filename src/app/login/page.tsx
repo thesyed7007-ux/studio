@@ -27,14 +27,16 @@ export default function LoginPage() {
         }
     }, [user, loading, router]);
 
-    const handleGoogleSignIn = async () => {
+    const handleGoogleSignIn = () => {
         const provider = new GoogleAuthProvider();
-        try {
-            await signInWithPopup(auth, provider);
-            router.push('/dashboard');
-        } catch (error) {
-            console.error("Error signing in with Google: ", error);
-        }
+        signInWithPopup(auth, provider)
+            .catch((error) => {
+                // This error occurs when the user closes the popup.
+                // It's a normal user action, not a bug, so we can ignore it.
+                if (error.code !== 'auth/cancelled-popup-request') {
+                    console.error("Error signing in with Google: ", error);
+                }
+            });
     };
 
     if (loading || user) {
