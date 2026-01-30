@@ -14,12 +14,14 @@ import {
   MessageSquare,
   Building2,
   PlusCircle,
+  ClipboardSignature,
 } from "lucide-react";
 import Link from "next/link";
 
 const navItems = [
   { href: "/dashboard", icon: <LayoutGrid />, label: "Dashboard" },
   { href: "/jobs", icon: <Search />, label: "Job Search" },
+  { href: "/resume-builder", icon: <ClipboardSignature />, label: "Resume Builder" },
   { href: "/resume-doctor", icon: <FileText />, label: "Resume Doctor" },
   { href: "/salary-coach", icon: <DollarSign />, label: "Salary Coach" },
   { href: "/interview-prep", icon: <MessageSquare />, label: "Interview Prep" },
@@ -36,7 +38,7 @@ export function MainNav() {
         <SidebarMenuItem key={item.href}>
           <SidebarMenuButton
             asChild
-            isActive={pathname === item.href}
+            isActive={pathname.startsWith(item.href)}
             tooltip={item.label}
           >
             <Link href={item.href}>
