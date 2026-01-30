@@ -53,10 +53,10 @@ export default function LandingPage() {
         <section className="py-20 md:py-32">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-headline font-bold tracking-tighter mb-4">
-              Land Your Dream Job, Faster.
+              Your Career Ascends Here.
             </h1>
             <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-8">
-              CareerCopilot is the all-in-one AI platform that streamlines your job search, from discovery to offer negotiation.
+              CareerCopilot is the all-in-one AI platform that streamlines your job search, from discovery to offer negotiation. Stop juggling tools. Start landing offers.
             </p>
             <Button asChild size="lg">
               <Link href="/dashboard">
