@@ -5,8 +5,21 @@ import { FirebaseClientProvider } from "@/firebase/client-provider";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "CareerCopilot by SL Tech",
-  description: "Your all-in-one AI career platform that solves every job search problem in one place.",
+  title: "CareerCopilot | AI Job Search & Career Platform",
+  description: "Your all-in-one AI career platform. Get AI-powered resume building, smart job searching, interview prep, salary negotiation coaching, and more. Land your dream job faster with CareerCopilot.",
+  keywords: ["AI career coach", "job search", "resume builder", "interview prep", "salary negotiation", "career advice", "job finder", "ATS resume"],
+  openGraph: {
+    title: "CareerCopilot | AI Job Search & Career Platform",
+    description: "The ultimate AI-powered tool to streamline your job search and accelerate your career.",
+    siteName: 'CareerCopilot',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "CareerCopilot | AI Job Search & Career Platform",
+    description: "Your all-in-one AI career platform. Get AI-powered resume building, smart job searching, interview prep, salary negotiation coaching, and more.",
+  },
 };
 
 export default function RootLayout({
