@@ -1,6 +1,7 @@
+
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -17,9 +18,12 @@ import {
   ClipboardSignature,
   Mail,
   BookOpen,
+  Lock,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { useUser, useFirestore, useMemoFirebase, useDoc } from "@/firebase";
+import { doc } from "firebase/firestore";
 
 const ProBadge = () => (
     <Badge variant="default" className="absolute right-3 top-1/2 -translate-y-1/2 h-auto px-2 py-0.5 leading-none group-data-[collapsible=icon]:hidden">
@@ -42,30 +46,41 @@ const navItems = [
 
 export function MainNav() {
   const pathname = usePathname();
-  const router = useRouter();
+  const { user } = useUser();
+  const firestore = useFirestore();
 
-  const handleProClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    router.push('/upgrade');
-  };
+  const userDocRef = useMemoFirebase(() => {
+    if (!user || !firestore) return null;
+    return doc(firestore, 'users', user.uid);
+  }, [user, firestore]);
+
+  const { data: userProfile } = useDoc<{ isPro?: boolean }>(userDocRef);
+  const isProUser = userProfile?.isPro ?? false;
 
   return (
     <SidebarMenu>
-      {navItems.map((item) => (
-        <SidebarMenuItem key={item.href}>
-          <SidebarMenuButton
-            asChild
-            isActive={pathname.startsWith(item.href) && !item.isPro}
-            tooltip={item.label}
-          >
-            <Link href={item.href} onClick={item.isPro ? handleProClick : undefined}>
-              {item.icon}
-              <span>{item.label}</span>
-              {item.isPro && <ProBadge />}
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      ))}
+      {navItems.map((item) => {
+        const isFeatureLocked = item.isPro && !isProUser;
+        const targetHref = isFeatureLocked ? '/upgrade' : item.href;
+
+        return (
+          <SidebarMenuItem key={item.href}>
+            <SidebarMenuButton
+              asChild
+              isActive={pathname.startsWith(item.href) && !isFeatureLocked}
+              tooltip={item.label}
+            >
+              <Link href={targetHref}>
+                {isFeatureLocked ? <Lock /> : item.icon}
+                <span>{item.label}</span>
+                {item.isPro && <ProBadge />}
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        );
+      })}
     </SidebarMenu>
   );
 }
+
+    

@@ -1,5 +1,10 @@
+
 "use client";
 
+import { useEffect } from "react";
+import { useUser, useAuth, useFirestore } from "@/firebase";
+import { initiateAnonymousSignIn } from "@/firebase/non-blocking-login";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import {
   Sidebar,
   SidebarContent,
@@ -18,6 +23,33 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
+  const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+  const firestore = useFirestore();
+
+  useEffect(() => {
+    if (!isUserLoading && !user && auth) {
+      initiateAnonymousSignIn(auth);
+    }
+  }, [isUserLoading, user, auth]);
+
+  useEffect(() => {
+    if (user && firestore) {
+      const userRef = doc(firestore, 'users', user.uid);
+      // Check if the user document exists, and if not, create it.
+      // This is a one-time setup for a new user.
+      getDoc(userRef).then(docSnap => {
+        if (!docSnap.exists()) {
+          setDoc(userRef, { 
+            id: user.uid, 
+            isPro: false,
+            email: user.email || '',
+          });
+        }
+      });
+    }
+  }, [user, firestore]);
+
   return (
     <SidebarProvider>
       <Sidebar>
@@ -61,3 +93,5 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     </SidebarProvider>
   );
 }
+
+    

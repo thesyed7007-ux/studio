@@ -36,14 +36,14 @@
           "type": "string",
           "description": "URL to the user's resume.",
           "format": "uri"
+        },
+        "isPro": {
+            "type": "boolean",
+            "description": "Indicates if the user has a Pro subscription."
         }
       },
       "required": [
-        "id",
-        "email",
-        "firstName",
-        "lastName",
-        "role"
+        "id"
       ]
     },
     "JobPosting": {
@@ -229,7 +229,7 @@
           "schema": {
             "$ref": "#/backend/entities/User"
           },
-          "description": "Stores user profiles. Uses path-based ownership for private user data.",
+          "description": "Stores user profiles, including their Pro status. Uses path-based ownership for private user data.",
           "params": [
             {
               "name": "userId",
@@ -310,3 +310,5 @@
     "reasoning": "The Firestore data structure is designed to support CareerCopilot's core features, focusing on job postings, applications, user data, and company information. Authorization Independence is achieved through path-based ownership for user-related data and denormalization of recruiter information into job postings. Specifically, the `JobPosting` documents include the `recruiterId` allowing rules to enforce that only the recruiter who created the job posting can modify it, thus eliminating the need for `get()` calls to the `/users` collection to determine ownership. Additionally, roles are stored directly in the user document itself in the `/users` collection, eliminating the need for custom claims or separate role collections.\n\nThe structure also addresses QAPs (Rules are not Filters). Segregation is used to ensure that each collection has a homogenous security posture. User-owned data (like applications) is stored under the `/users/{userId}` path, while recruiter-owned data (job postings) is stored under `/job_postings` with the recruiter's ID denormalized within each document. This segregation prevents the need for complex filtering within rules. List operations are secured by ensuring that rules can efficiently verify user roles or ownership without querying other parts of the database.\n\nThe use of explicit state modeling through the `status` field in the `Application` entity and predictable schema with consistent naming conventions further enhances debuggability and maintainability. Timestamps are also present to track posted dates and application dates."
   }
 }
+
+    
