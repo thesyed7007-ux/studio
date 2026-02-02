@@ -24,7 +24,7 @@ export default function UpgradePage() {
       <Card className="shadow-lg shadow-primary/10">
         <CardHeader className="text-center">
             <h2 className="text-2xl font-bold font-headline">CareerCopilot Pro</h2>
-            <p className="text-4xl font-bold">₹499</p>
+            <p className="text-4xl font-bold">₹139</p>
         </CardHeader>
         <CardContent className="space-y-4">
             <p className="text-sm text-center text-muted-foreground">Includes everything in the free plan, plus:</p>
@@ -39,7 +39,7 @@ export default function UpgradePage() {
         </CardContent>
         <CardFooter>
             <Button className="w-full text-lg" size="lg" asChild>
-                <a href="upi://pay?pa=9541814952@fam&pn=CareerCopilot&am=499&cu=INR">Upgrade Now</a>
+                <a href="upi://pay?pa=9541814952@fam&pn=CareerCopilot&am=139&cu=INR">Upgrade Now</a>
             </Button>
         </CardFooter>
       </Card>
