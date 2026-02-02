@@ -24,7 +24,7 @@ export default function UpgradePage() {
       <Card className="shadow-lg shadow-primary/10">
         <CardHeader className="text-center">
             <h2 className="text-2xl font-bold font-headline">CareerCopilot Pro</h2>
-            <p className="text-4xl font-bold">$9<span className="text-lg font-normal text-muted-foreground">/month</span></p>
+            <p className="text-4xl font-bold">₹499</p>
         </CardHeader>
         <CardContent className="space-y-4">
             <p className="text-sm text-center text-muted-foreground">Includes everything in the free plan, plus:</p>
@@ -39,13 +39,12 @@ export default function UpgradePage() {
         </CardContent>
         <CardFooter>
             <Button className="w-full text-lg" size="lg" asChild>
-                {/* Important: Replace '#' with your actual Stripe Payment Link */}
-                <a href="#" target="_blank" rel="noopener noreferrer">Upgrade Now</a>
+                <a href="upi://pay?pa=9541814952@fam&pn=CareerCopilot&am=499&cu=INR">Upgrade Now</a>
             </Button>
         </CardFooter>
       </Card>
       <p className="text-center text-xs text-muted-foreground mt-4">
-        You will be redirected to Stripe to complete your purchase. You can cancel anytime.
+        You will be prompted to complete your payment via UPI.
       </p>
     </div>
   );
