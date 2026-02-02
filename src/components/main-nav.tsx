@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   SidebarMenu,
   SidebarMenuItem,
@@ -42,6 +42,12 @@ const navItems = [
 
 export function MainNav() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleProClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    router.push('/upgrade');
+  };
 
   return (
     <SidebarMenu>
@@ -49,10 +55,10 @@ export function MainNav() {
         <SidebarMenuItem key={item.href}>
           <SidebarMenuButton
             asChild
-            isActive={pathname.startsWith(item.href)}
+            isActive={pathname.startsWith(item.href) && !item.isPro}
             tooltip={item.label}
           >
-            <Link href={item.href}>
+            <Link href={item.href} onClick={item.isPro ? handleProClick : undefined}>
               {item.icon}
               <span>{item.label}</span>
               {item.isPro && <ProBadge />}
