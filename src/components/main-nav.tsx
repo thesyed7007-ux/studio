@@ -19,18 +19,25 @@ import {
   BookOpen,
 } from "lucide-react";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+
+const ProBadge = () => (
+    <Badge variant="default" className="absolute right-3 top-1/2 -translate-y-1/2 h-auto px-2 py-0.5 leading-none group-data-[collapsible=icon]:hidden">
+      Pro
+    </Badge>
+);
 
 const navItems = [
   { href: "/dashboard", icon: <LayoutGrid />, label: "Dashboard" },
   { href: "/jobs", icon: <Search />, label: "Job Search" },
   { href: "/resume-builder", icon: <ClipboardSignature />, label: "Resume Builder" },
-  { href: "/resume-doctor", icon: <FileText />, label: "Resume Doctor" },
-  { href: "/salary-coach", icon: <DollarSign />, label: "Salary Coach" },
-  { href: "/interview-prep", icon: <MessageSquare />, label: "Interview Prep" },
+  { href: "/resume-doctor", icon: <FileText />, label: "Resume Doctor", isPro: true },
+  { href: "/salary-coach", icon: <DollarSign />, label: "Salary Coach", isPro: true },
+  { href: "/interview-prep", icon: <MessageSquare />, label: "Interview Prep", isPro: true },
   { href: "/companies", icon: <Building2 />, label: "Companies" },
   { href: "/articles", icon: <BookOpen />, label: "Career Hub" },
   { href: "/post-a-job", icon: <PlusCircle />, label: "Post a Job" },
-  { href: "/email-assistant", icon: <Mail />, label: "Email Assistant" },
+  { href: "/email-assistant", icon: <Mail />, label: "Email Assistant", isPro: true },
 ];
 
 export function MainNav() {
@@ -48,6 +55,7 @@ export function MainNav() {
             <Link href={item.href}>
               {item.icon}
               <span>{item.label}</span>
+              {item.isPro && <ProBadge />}
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>

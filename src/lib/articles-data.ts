@@ -30,7 +30,12 @@ Pay attention to the application instructions. If it doesn't specify, a .docx or
 - **.docx:** This is often the most easily parsed format for older ATS systems.
 - **.pdf:** Newer ATS systems handle PDFs well, and they have the benefit of preserving your formatting perfectly across all devices. Unless the application specifically says "no PDFs," this is a great option.
 
-By following these tips, you can dramatically increase the chances of your resume making it past the initial automated screening and into the hands of a hiring manager.`,
+By following these tips, you can dramatically increase the chances of your resume making it past the initial automated screening and into the hands of a hiring manager.
+
+### Recommended Courses (Affiliate Links)
+Want to become a resume expert? Check out these courses to master the art of resume writing and career branding. *Disclaimer: As an affiliate, I earn from qualifying purchases.*
+- [Complete Resume & Interview Prep on Udemy](#)
+- [Personal Branding on Coursera](#)`,
   },
   {
     slug: 'salary-negotiation-strategies',
@@ -63,7 +68,12 @@ Confidence is key. Practice saying the words out loud. Your tone should be colla
 - **Reiterate your value:** "I'm very excited about this opportunity and confident in my ability to [mention a key contribution you can make]. Based on my [experience/skill], I was hoping for a salary closer to the higher end of the market range."
 
 ### Strategy 5: Always Get the Final Offer in Writing
-Once you've verbally agreed on the terms, ask for a revised offer letter that details all aspects of your compensation package. This prevents any misunderstandings and ensures that what you discussed is what you'll receive. Never resign from your current job until you have a signed, written offer in hand.`,
+Once you've verbally agreed on the terms, ask for a revised offer letter that details all aspects of your compensation package. This prevents any misunderstandings and ensures that what you discussed is what you'll receive. Never resign from your current job until you have a signed, written offer in hand.
+
+### Recommended Courses (Affiliate Links)
+Ready to become a master negotiator? These courses will give you the skills and confidence to ask for what you're worth. *Disclaimer: As an affiliate, I earn from qualifying purchases.*
+- [Successful Negotiation: Essential Strategies and Skills on Coursera](#)
+- [Salary Negotiation Masterclass on Udemy](#)`,
   },
   {
     slug: 'star-method-interview',
@@ -90,6 +100,11 @@ STAR is an acronym that stands for Situation, Task, Action, and Result. It provi
 
 ### How to Prepare
 Before your interview, brainstorm examples from your past experience that align with the skills listed in the job description (e.g., leadership, teamwork, problem-solving). Write out a few stories for each skill using the STAR framework.
-- **How CareerCopilot Helps:** Use our AI Interview Prep Bot to practice your STAR answers. The bot can ask you common behavioral questions and give you instant feedback on the structure and content of your responses.`,
+- **How CareerCopilot Helps:** Use our AI Interview Prep Bot to practice your STAR answers. The bot can ask you common behavioral questions and give you instant feedback on the structure and content of your responses.
+
+### Recommended Courses (Affiliate Links)
+Practice makes perfect. Sharpen your interviewing skills with these top-rated courses. *Disclaimer: As an affiliate, I earn from qualifying purchases.*
+- [Master the Behavioral Interview on Udemy](#)
+- [Data Structures & Algorithms for Interviews on Coursera](#)`,
   },
 ];

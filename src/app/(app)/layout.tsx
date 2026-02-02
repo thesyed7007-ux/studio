@@ -4,14 +4,18 @@ import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
+  SidebarFooter,
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import Logo from "@/components/logo";
 import { MainNav } from "@/components/main-nav";
-import { Search } from "lucide-react";
+import { Search, Zap } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,6 +27,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <SidebarContent>
           <MainNav />
         </SidebarContent>
+        <SidebarFooter>
+          <Separator className="mb-2" />
+          <Button asChild>
+            <Link href="/upgrade">
+              <Zap className="mr-2 h-4 w-4" />
+              Upgrade to Pro
+            </Link>
+          </Button>
+        </SidebarFooter>
       </Sidebar>
       <SidebarInset>
         <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:h-16 sm:px-6">
