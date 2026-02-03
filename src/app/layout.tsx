@@ -48,6 +48,19 @@ export default function RootLayout({
           {children}
         </FirebaseClientProvider>
         <Toaster />
+        <Script id="monetag-sw-registration">
+          {`
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                  console.log('Monetag service worker registration successful.');
+                }, function(err) {
+                  console.error('Monetag service worker registration failed: ', err);
+                });
+              });
+            }
+          `}
+        </Script>
       </body>
     </html>
   );
