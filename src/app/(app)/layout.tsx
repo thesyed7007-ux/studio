@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useEffect } from "react";
@@ -42,7 +43,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         if (!docSnap.exists()) {
           setDoc(userRef, { 
             id: user.uid, 
-            isPro: false,
             email: user.email || '',
           });
         }
@@ -60,13 +60,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <MainNav />
         </SidebarContent>
         <SidebarFooter>
-          <Separator className="mb-2" />
-          <Button asChild>
-            <Link href="/upgrade">
-              <Zap className="mr-2 h-4 w-4" />
-              Upgrade to Pro
-            </Link>
-          </Button>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
