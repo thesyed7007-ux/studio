@@ -20,6 +20,7 @@ import {
   DollarSign,
   MessageSquare,
   Building2,
+  Feather,
 } from "lucide-react";
 
 const statusColors: Record<JobStatus, string> = {
@@ -55,6 +56,12 @@ const features = [
     description: "Build a new resume from scratch with AI assistance.",
     icon: <ClipboardSignature className="h-6 w-6 text-primary" />,
     href: "/resume-builder",
+  },
+  {
+    title: "Cover Letter Writer",
+    description: "Create a tailored cover letter for any job application.",
+    icon: <Feather className="h-6 w-6 text-primary" />,
+    href: "/cover-letter-generator",
   },
   {
     title: "Resume Doctor",

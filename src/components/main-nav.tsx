@@ -19,6 +19,7 @@ import {
   Mail,
   BookOpen,
   Lock,
+  Feather,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -35,6 +36,7 @@ const navItems = [
   { href: "/dashboard", icon: <LayoutGrid />, label: "Dashboard" },
   { href: "/jobs", icon: <Search />, label: "Job Search" },
   { href: "/resume-builder", icon: <ClipboardSignature />, label: "Resume Builder" },
+  { href: "/cover-letter-generator", icon: <Feather />, label: "Cover Letter Writer" },
   { href: "/resume-doctor", icon: <FileText />, label: "Resume Doctor", isPro: true },
   { href: "/salary-coach", icon: <DollarSign />, label: "Salary Coach", isPro: true },
   { href: "/interview-prep", icon: <MessageSquare />, label: "Interview Prep", isPro: true },
@@ -82,5 +84,3 @@ export function MainNav() {
     </SidebarMenu>
   );
 }
-
-    
