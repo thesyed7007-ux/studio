@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUser } from "@/firebase";
 import { CheckCircle, Zap, Info } from "lucide-react";
+import Link from "next/link";
 
 const proFeatures = [
   "AI Resume Tailoring for any Job",
@@ -48,9 +48,12 @@ export default function UpgradePage() {
                 ))}
             </ul>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex-col items-stretch gap-3 pt-6">
             <Button className="w-full text-lg" size="lg" asChild>
-                <a href="upi://pay?pa=9541814952@fam&pn=CareerCopilot&am=49&cu=INR">Upgrade Now</a>
+                <a href="upi://pay?pa=9541814952@fam&pn=CareerCopilot&am=49&cu=INR">Pay with UPI</a>
+            </Button>
+            <Button variant="outline" className="w-full" asChild>
+                <Link href="/upgrade/confirmation">I've Already Paid</Link>
             </Button>
         </CardFooter>
       </Card>
@@ -83,7 +86,7 @@ export default function UpgradePage() {
       )}
 
       <p className="text-center text-xs text-muted-foreground mt-4">
-        You will be prompted to complete your payment via UPI. Please note that feature unlocking is not instant and depends on your automation setup.
+        After paying, click "I've Already Paid" to submit your transaction ID.
       </p>
     </div>
   );
